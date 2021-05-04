@@ -1,0 +1,17 @@
+/Users/vinokurovaleksandr/C#/HomeWork9/HomeWork9/HomeWork9/bin/Debug/HomeWork9.exe.config
+/Users/vinokurovaleksandr/C#/HomeWork9/HomeWork9/HomeWork9/bin/Debug/HomeWork9.exe
+/Users/vinokurovaleksandr/C#/HomeWork9/HomeWork9/HomeWork9/bin/Debug/HomeWork9.pdb
+/Users/vinokurovaleksandr/C#/HomeWork9/HomeWork9/HomeWork9/bin/Debug/Newtonsoft.Json.dll
+/Users/vinokurovaleksandr/C#/HomeWork9/HomeWork9/HomeWork9/bin/Debug/System.Runtime.CompilerServices.Unsafe.dll
+/Users/vinokurovaleksandr/C#/HomeWork9/HomeWork9/HomeWork9/bin/Debug/System.Threading.Tasks.Extensions.dll
+/Users/vinokurovaleksandr/C#/HomeWork9/HomeWork9/HomeWork9/bin/Debug/Telegram.Bot.dll
+/Users/vinokurovaleksandr/C#/HomeWork9/HomeWork9/HomeWork9/bin/Debug/Newtonsoft.Json.xml
+/Users/vinokurovaleksandr/C#/HomeWork9/HomeWork9/HomeWork9/bin/Debug/System.Runtime.CompilerServices.Unsafe.xml
+/Users/vinokurovaleksandr/C#/HomeWork9/HomeWork9/HomeWork9/bin/Debug/System.Threading.Tasks.Extensions.xml
+/Users/vinokurovaleksandr/C#/HomeWork9/HomeWork9/HomeWork9/bin/Debug/Telegram.Bot.xml
+/Users/vinokurovaleksandr/C#/HomeWork9/HomeWork9/HomeWork9/obj/Debug/HomeWork9.csprojAssemblyReference.cache
+/Users/vinokurovaleksandr/C#/HomeWork9/HomeWork9/HomeWork9/obj/Debug/HomeWork9.exe.config
+/Users/vinokurovaleksandr/C#/HomeWork9/HomeWork9/HomeWork9/obj/Debug/HomeWork9.csproj.CoreCompileInputs.cache
+/Users/vinokurovaleksandr/C#/HomeWork9/HomeWork9/HomeWork9/obj/Debug/HomeWork9.csproj.CopyComplete
+/Users/vinokurovaleksandr/C#/HomeWork9/HomeWork9/HomeWork9/obj/Debug/HomeWork9.exe
+/Users/vinokurovaleksandr/C#/HomeWork9/HomeWork9/HomeWork9/obj/Debug/HomeWork9.pdb
