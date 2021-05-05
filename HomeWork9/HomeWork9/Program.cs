@@ -30,7 +30,7 @@ namespace HomeWork9
         {
             string text = $"{DateTime.Now.ToLongTimeString()}: {e.Message.Chat.FirstName} {e.Message.Chat.Id} {e.Message.Text}";
 
-            Console.WriteLine($"{text} TypeMessage: {e.Message.Type.ToString()}");
+            Console.WriteLine($"{text} TypeMessage: {e.Message.Type}");
 
             if (e.Message.Type == Telegram.Bot.Types.Enums.MessageType.Document)
             {
