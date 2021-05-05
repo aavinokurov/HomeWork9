@@ -78,7 +78,25 @@ namespace HomeWork9
         /// </summary>
         /// <param name="chatId">ID чата</param>
         /// <param name="fileName">Имя файла</param>
-        public async void SendFile(ChatId chatId, string path)
+        public async void SendDocument(ChatId chatId, string path, string fileName)
+        {
+            using (var fs = File.OpenRead(path))
+            {
+                Telegram.Bot.Types.InputFiles.InputOnlineFile iof =
+                    new Telegram.Bot.Types.InputFiles.InputOnlineFile(fs);
+
+                iof.FileName = fileName;
+
+                var send = await bot.SendDocumentAsync(chatId, iof);
+            }
+        }
+
+        /// <summary>
+        /// Отправить файл с диска
+        /// </summary>
+        /// <param name="chatId">ID чата</param>
+        /// <param name="fileName">Имя файла</param>
+        public async void SendVoice(ChatId chatId, string path)
         {
             using (var fs = File.OpenRead(path))
             {
@@ -90,17 +108,38 @@ namespace HomeWork9
         }
 
         /// <summary>
+        /// Отправить файл с диска
+        /// </summary>
+        /// <param name="chatId">ID чата</param>
+        /// <param name="fileName">Имя файла</param>
+        public async void SendPhoto(ChatId chatId, string path)
+        {
+            using (var fs = File.OpenRead(path))
+            {
+                Telegram.Bot.Types.InputFiles.InputOnlineFile iof =
+                    new Telegram.Bot.Types.InputFiles.InputOnlineFile(fs);
+
+                var send = await bot.SendPhotoAsync(chatId, iof);
+            }
+        }
+
+        /// <summary>
         /// Выбрать тип файл
         /// </summary>
         public void SelectTypeFile(Telegram.Bot.Args.MessageEventArgs messageEvent)
         {
             string sendMessage = "Выбери тип файла:\n" +
                                  "1 - Документ\n" +
-                                 "2 - Аудиосообщение";
+                                 "2 - Аудиосообщение\n" +
+                                 "3 - Фото";
 
             bot.SendTextMessageAsync(messageEvent.Message.Chat.Id, sendMessage);
         }
 
+        /// <summary>
+        /// Выбор файла для скачивания
+        /// </summary>
+        /// <param name="messageEvent"></param>
         public void SelectFile(Telegram.Bot.Args.MessageEventArgs messageEvent)
         {
             DirectoryInfo directoryInfo = new DirectoryInfo(DownloadFolder);
@@ -136,11 +175,19 @@ namespace HomeWork9
             if (messageEvent.Message.Type == Telegram.Bot.Types.Enums.MessageType.Document)
             {
                 DownLoadFile(messageEvent.Message.Document.FileId, @"Document/" + messageEvent.Message.Document.FileName);
+                return;
             }
 
             if (messageEvent.Message.Type == Telegram.Bot.Types.Enums.MessageType.Voice)
             {
-                DownLoadFile(messageEvent.Message.Voice.FileId, @"Voice/" + DateTime.Now.ToString("yyyy.MM.dd HH_mm") + ".ogg");
+                DownLoadFile(messageEvent.Message.Voice.FileId, $@"Voice/{DateTime.Now.ToString("yyyy.MM.dd HH_mm_ss")}.ogg");
+                return;
+            }
+
+            if (messageEvent.Message.Type == Telegram.Bot.Types.Enums.MessageType.Photo)
+            {
+                DownLoadFile(messageEvent.Message.Photo[messageEvent.Message.Photo.Length - 1].FileId, $@"Photo/{DateTime.Now.ToString("yyyy.MM.dd HH_mm_ss")}.jpg");
+                return;
             }
 
             if (isDownload)
@@ -149,7 +196,7 @@ namespace HomeWork9
 
                 if (DownloadFolder == @"Download")
                 {
-                    if (Int32.TryParse(messageEvent.Message.Text, out answer) && answer > 0 && answer < 3)
+                    if (Int32.TryParse(messageEvent.Message.Text, out answer) && answer > 0 && answer < 4)
                     {
                         switch (answer)
                         {
@@ -159,13 +206,16 @@ namespace HomeWork9
                             case 2:
                                 DownloadFolder += @"\Voice";
                                 break;
+                            case 3:
+                                DownloadFolder += @"\Photo";
+                                break;
                         }
 
                         SelectFile(messageEvent);
                     }
                     else
                     {
-                        bot.SendTextMessageAsync(messageEvent.Message.Chat.Id, "Такого типа файла нет.");
+                        bot.SendTextMessageAsync(messageEvent.Message.Chat.Id, "Такого типа файла нет(");
                         isDownload = false;
                     }
                 }
@@ -176,17 +226,35 @@ namespace HomeWork9
 
                     if (Int32.TryParse(messageEvent.Message.Text, out answer) && answer > 0 && answer <= files.Length)
                     {      
-                        SendFile(messageEvent.Message.Chat.Id, files[answer - 1].FullName);
+                        switch (directoryInfo.Name)
+                        {
+                            case "Document":
+                                SendDocument(messageEvent.Message.Chat.Id, files[answer - 1].FullName, files[answer - 1].Name);
+                                break;
+                            case "Photo":
+                                SendPhoto(messageEvent.Message.Chat.Id, files[answer - 1].FullName);
+                                break;
+                            case "Voice":
+                                SendVoice(messageEvent.Message.Chat.Id, files[answer - 1].FullName);
+                                break;
+                        }
                     }
+                    else
+                    {
+                        bot.SendTextMessageAsync(messageEvent.Message.Chat.Id, "Такого файла нет(");
+                    }
+
                     isDownload = false;
                     DownloadFolder = @"Download";
                 }
+                return;
             }
 
             if (messageEvent.Message.Text == @"/Download")
             {
                 isDownload = true;
                 SelectTypeFile(messageEvent);
+                return;
             }
 
             if (messageEvent.Message.Text == null) return;
