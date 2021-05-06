@@ -22,9 +22,8 @@ namespace HomeWork9
             string token = "";
 
             MyTelegramBot telegramBot = new MyTelegramBot(token);
-
-            telegramBot.bot.OnMessage += telegramBot.TakeMessage;
-            telegramBot.bot.StartReceiving();
+            
+            telegramBot.StartBot();
             Console.ReadKey();
         }
     }
